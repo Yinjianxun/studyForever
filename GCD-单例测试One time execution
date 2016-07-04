@@ -1,0 +1,56 @@
+
+有的时候，在程序开发中，有些代码只想从程序启动就只执行一次，典型的应用场景就是“单例”
+
+例如：
+    // MARK: 一次性执行
+  - (void)once {
+    static dispatch_once_t onceToken;
+    NSLog(@"%ld", onceToken);
+
+    dispatch_once(&onceToken, ^{
+        [NSThread sleepForTimeInterval:1.0];
+        NSLog(@"一次性吗?");
+    });
+    NSLog(@"come here");
+}
+
+dispatch 内部也有一把锁，是能够保证"线程安全"的！而且是苹果公司推荐使用的。
+以下代码用于测试多线程的一次性执行：
+- (void)demoOnce {
+    for (int i = 0; i < 10; ++i) {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self once];
+        });
+    }
+}
+
+上面说过，一次性执行最常用到的场景是单例，
+单例的特点：
+  在内存中只有一个实例；
+  提供一个全局的访问点
+
+// 使用 dispatch_once 实现单例
+static id _instance;
+//单例的实现
++ (instancetype)sharedMusicManager{
+    if (_instance){
+        return _instance;
+    }
+    _instance = [[self alloc] init];
+    return _instance;
+    
+}
+
+//[alloc] init 方法会调用 allocWithZone
++ (instancetype)allocWithZone:(struct _NSZone *)zone{
+    static dispatch_once_t onceToken;
+    //系统提供的, 官方建议实现单例就用这种方式
+    //dispatch_once 这个方法是线程安全
+    dispatch_once(&onceToken, ^{
+        _instance = [super allocWithZone:zone];
+    });
+    return _instance;
+}
+
+@end
+
