@@ -1,4 +1,56 @@
+20190912
 
+    NSLog(@"-------yIN==%f", [self degreesStringToDecimal:@"35°28'26.3\"N"]);
+    
+    NSLog(@"----=[%f]", [self degreesStringToDecimal:@"139°36'52.7\"E"]);
+    
+//    -19.267047, 133.182922   19°16'01.4"S 133°10'58.5"E
+    
+    NSLog(@"---[%f]", [self degreesStringToDecimal:@"19°16'01.4\"S"]);
+    
+    NSLog(@"----=[%f]", [self degreesStringToDecimal:@"133°10'58.5\"E"]);
+    
+}
+
+- (double)degreesStringToDecimal:(NSString*)string
+{
+    // split the string
+    NSArray *splitDegs = [string componentsSeparatedByString:@"\u00B0"];  // unicode for degree symbol
+    NSArray *splitMins = [splitDegs[1] componentsSeparatedByString:@"'"];
+    NSArray *splitSecs = [splitMins[1] componentsSeparatedByString:@"\""];
+    
+    // get each segment of the dms string
+    NSString *degreesString = splitDegs[0];
+    NSString *minutesString = splitMins[0];
+    NSString *secondsString = splitSecs[0];
+    NSString *direction = splitSecs[1];
+    
+    // convert degrees
+    double degrees = [degreesString doubleValue];
+    
+    // convert minutes
+    double minutes = [minutesString doubleValue] / 60;  // 60 degrees in a minute
+    
+    // convert seconds
+    double seconds = [secondsString doubleValue] / 3600; // 60 seconds in a minute, or 3600 in a degree
+    
+    // add them all together
+    double decimal = degrees + minutes + seconds;
+    
+    // determine if this is negative. south and west would be negative values
+    if ([direction.uppercaseString isEqualToString:@"W"] || [direction.uppercaseString isEqualToString:@"S"])
+    {
+        decimal = -decimal;
+    }
+    
+    return decimal;
+}
+
+
+
+
+
++++++++++++++++++++++++======================++++++++++++++==============++++++++++++++===========++++++==
 有的时候，在程序开发中，有些代码只想从程序启动就只执行一次，典型的应用场景就是“单例”
 
 例如：
