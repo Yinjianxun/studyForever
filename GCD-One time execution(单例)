@@ -1,3 +1,57 @@
+20191002
+
+StoryBoard中添加一个View ->baseView
+任意位置 添加
+约束设置 ：宽 高14 居上居左居右
+宽 约束 还要来链接到 .m文件 ->baseViewWidth  为了动态更改宽度
+
+确认：ImageView icon的显示情况
+
+- (void)viewDidLoad {
+
+
+    [super viewDidLoad];
+
+    self.baseView.layer.borderColor = [[UIColor darkGrayColor] CGColor];
+
+    [self.baseView.layer setMasksToBounds:YES];
+
+    self.baseView.layer.borderWidth = 0.5;
+
+    self.baseView.layer.cornerRadius = 2;
+
+    NSString *str = @"天将我命dddddddddddddddd顶顶顶顶";
+
+    CGRect tempRect = [str boundingRectWithSize:
+                       CGSizeMake([UIScreen mainScreen].bounds.size.width - 40,2000)
+                                        options:NSStringDrawingUsesLineFragmentOrigin
+                                     attributes:@{NSFontAttributeName:[UIFont systemFontOfSize:10]}
+                                        context:nil];
+
+    UILabel * label = [[UILabel alloc] initWithFrame:CGRectMake(20, 0, tempRect.size.width, self.baseView.frame.size.height)];
+
+    label.text = str;
+
+    label.font = [UIFont systemFontOfSize:10];
+//    label.adjustsFontSizeToFitWidth = YES;
+//    label.backgroundColor = [UIColor redColor];
+//    [label sizeToFit];
+    label.numberOfLines = 0;
+    [self.baseView addSubview:label];
+
+    self.baseViewWidth.constant = label.bounds.size.width + 24;
+
+    UIImageView * image = [[UIImageView alloc] initWithFrame:CGRectMake(4, 0, 14, self.baseView.frame.size.height)];
+    image.backgroundColor = [UIColor redColor];
+
+    image.image = [UIImage imageNamed:@"mdks"];;
+
+    [self.baseView addSubview:image];
+
+}
+
+
+------------------------------------------------------------------------------------------------------------------
 20190912
 
     NSLog(@"-------yIN==%f", [self degreesStringToDecimal:@"35°28'26.3\"N"]);
