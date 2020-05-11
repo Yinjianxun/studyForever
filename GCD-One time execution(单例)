@@ -223,3 +223,54 @@ static id _instance;
 
 @end
 
+===============================
+
+
+
+
+CGRect origin = self.logImageView.frame;
+    CGRect origin2 = self.logImageView2.frame;
+    [UIView animateKeyframesWithDuration:6.8 delay:0.f options:UIViewKeyframeAnimationOptionCalculationModeCubicPaced | UIViewKeyframeAnimationOptionRepeat animations:^{
+
+        [UIView addKeyframeWithRelativeStartTime:0.f relativeDuration:0.25 animations:^{
+
+            self.logImageView.frame = CGRectMake(origin.origin.x - ([UIScreen mainScreen].bounds.size.width / 4), origin.origin.y + 7, origin.size.width, origin.size.height * 0.83);
+//            self.logImageView.center = (CGPoint){ center.x, center.y + 7};
+            
+            self.logImageView2.frame = CGRectMake(origin2.origin.x - ([UIScreen mainScreen].bounds.size.width / 4), origin2.origin.y + 7, origin2.size.width, origin2.size.height * 0.83);
+
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.25 relativeDuration:0.25 animations:^{
+
+//            self.logImageView.frame = origin;
+            self.logImageView.frame = CGRectMake(origin.origin.x - ([UIScreen mainScreen].bounds.size.width / 2), origin.origin.y, origin.size.width, origin.size.height);
+            
+//            self.logImageView.center = (CGPoint){ center.x, center.y};
+            self.logImageView2.frame = CGRectMake(origin2.origin.x - ([UIScreen mainScreen].bounds.size.width / 2), origin2.origin.y, origin2.size.width, origin2.size.height);
+
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.5 relativeDuration:0.25 animations:^{
+            self.logImageView.frame = CGRectMake(origin.origin.x - ([UIScreen mainScreen].bounds.size.width / 4 * 3), origin.origin.y - 13, origin.size.width, origin.size.height * 0.83);
+//            self.logImageView.center = (CGPoint){ center.x, center.y - 13};
+            self.logImageView2.frame = CGRectMake(origin2.origin.x - ([UIScreen mainScreen].bounds.size.width / 4 * 3), origin2.origin.y - 13, origin2.size.width, origin2.size.height * 0.83);
+
+        }];
+        [UIView addKeyframeWithRelativeStartTime:0.75 relativeDuration:0.25 animations:^{
+//            self.logImageView.frame = origin;
+            self.logImageView.frame = CGRectMake(origin.origin.x - ([UIScreen mainScreen].bounds.size.width), origin.origin.y, origin.size.width, origin.size.height);
+//            self.logImageView.center = (CGPoint){ center.x, center.y};
+            
+            self.logImageView2.frame = CGRectMake(0, origin2.origin.y, origin2.size.width, origin2.size.height);
+
+        }];
+        
+    } completion:^(BOOL finished) {
+        NSLog(@"动画结束");
+//        self.logImageView.frame = origin;
+//        self.logImageView2.frame = origin2;
+//        [self aniStartClick:sender];
+    }];
+
+
+
+
